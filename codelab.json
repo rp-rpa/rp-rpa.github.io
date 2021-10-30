@@ -1,0 +1,27 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-10-30T07:34:12Z",
+  "id": "rp-rpa.github.io",
+  "duration": 0,
+  "title": "RPA for Acad Staff",
+  "authors": "TAN KOK CHENG",
+  "summary": "RPA for Acad Staff",
+  "source": "1XNfwtKrk3fM5pWuIvIiswc8Oeaubs6Hbhiuu9nEUcck",
+  "theme": "web",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "Web"
+  ],
+  "tags": [
+    "kiosk",
+    "web"
+  ],
+  "feedback": "https://rp-rpa.github.io",
+  "ga": "UA-166036181-1",
+  "url": "rp-rpa.github.io"
+}

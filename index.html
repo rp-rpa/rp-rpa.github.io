@@ -1,0 +1,603 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>RPA for Acad Staff</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-166036181-1"
+                  id="rp-rpa.github.io"
+                  title="RPA for Acad Staff"
+                  environment="web"
+                  feedback-link="https://rp-rpa.github.io">
+    
+      <google-codelab-step label="RPA FOR ACADEMIC STAFF" duration="0">
+        <p>Sample for survey</p>
+<google-codelab-survey survey-id="rp-rpa.github.io-1">
+<h4>What do you like about python?</h4>
+<paper-radio-group>
+<paper-radio-button>Easy to learn</paper-radio-button>
+<paper-radio-button>Powerful</paper-radio-button>
+<paper-radio-button>Free</paper-radio-button>
+</paper-radio-group>
+</google-codelab-survey>
+<p>I am placing a repl iframe here</p>
+<iframe class="youtube-video" src="https://repl.it/@kokcheng/01-Files"></iframe>
+<p>End of repl iframe here</p>
+<p>Youtube video here</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Description</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Passing Data</p>
+<ul>
+<li>Pass data from VCA to VCB</li>
+<li>Use prepare(for:sender:)</li>
+</ul>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><iframe class="youtube-video" src="https://www.youtube.com/embed/E0yFkbmO3No?rel=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</td></tr>
+</table>
+<p><a href="https://youtu.be/E0yFkbmO3No" target="_blank">https://youtu.be/E0yFkbmO3No</a></p>
+<p>Sample for warning</p>
+<aside class="warning"><ul>
+<li>Technical – 30%</li>
+<li>Concept and Approach – 30%</li>
+<li>Creativity and Uniqueness – 30%</li>
+<li>Presentation – 10%</li>
+</ul>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Excel" duration="0">
+        <aside class="special"><p>Library required: openpyxl</p>
+<ul>
+<li><strong>Installation</strong>: pip install openpyxl</li>
+<li><strong>Documentation</strong>: <a href="https://openpyxl.readthedocs.io/en/stable/index.html" target="_blank">https://openpyxl.readthedocs.io/en/stable/index.html</a> </li>
+</ul>
+</aside>
+<p><strong>Use Case: Create Excel File</strong></p>
+<p>This can be broken down into the following steps:</p>
+<ol type="1" start="1">
+<li>Create workbook</li>
+<li>Get the worksheet</li>
+<li>Prepare the data in <em>list </em>data structure</li>
+<li>Iterate through the list, and update the cell value</li>
+<li>Save the workbook</li>
+</ol>
+<pre><code>import openpyxl
+
+#step 1
+workbook = openpyxl.Workbook()
+
+#step 2
+#get the default sheet
+sheet=workbook[&#34;Sheet&#34;]
+
+#step 3
+#create a list of tuples as data source
+data = [
+   [225.7,&#39;Gone with the Wind&#39;,&#39;Victor Fleming&#39;],
+   [194.4, &#39;Star Wars&#39;, &#39;George Lucas&#39;],
+   [161.0, &#39;ET: The Extraterrestrial&#39;, &#39;Steven Spielberg&#39;]
+]
+
+#step 4
+#fill up the row and col from the list data
+for i, statN in enumerate(data):
+   for j, item in enumerate(statN):
+       sheet.cell(row=i+1, column=j+1).value = item
+
+#this approach is easier for learning
+#not feasible if the list has many items
+&#39;&#39;&#39;   
+#update value into cell
+for row, (admissions,name, director) in enumerate(data,1):
+   sheet[&#39;A{}&#39;.format(row)].value = director
+   sheet[&#39;B{}&#39;.format(row)].value = name
+&#39;&#39;&#39;
+
+#step 5
+#save the spreadsheet
+workbook.save(&#34;test.xlsx&#34;)
+</code></pre>
+<p><strong>Use Case: Create Pivot Table</strong></p>
+<aside class="special"><p>Library required: pandas, numpy</p>
+<ul>
+<li><strong>Installation</strong>: pip install numpy pandas</li>
+</ul>
+<p>Useful resources: </p>
+<ul>
+<li><a href="https://pbpython.com/pandas-pivot-table-explained.html" target="_blank">https://pbpython.com/pandas-pivot-table-explained.html</a> </li>
+<li><a href="https://pbpython.com/pandas-pivot-report.html" target="_blank">https://pbpython.com/pandas-pivot-report.html</a></li>
+</ul>
+</aside>
+<p>This can be broken down into the following steps:</p>
+<ol type="1" start="1">
+<li>Load an Excel Spreadsheet into a <em>dataframe </em></li>
+<li>Use <strong>pivot_table()</strong> function to create <em>pivot table</em> from the dataframe</li>
+<li>Use <strong>xs()</strong> function to divide the pivot table into multiple section</li>
+<li>Save each segment of the dataframe into a separate sheet in the Excel file</li>
+</ol>
+<pre><code>import pandas as pd
+import numpy as np
+
+# Excel file has 3 columns: school, year, score
+df = pd.read_excel(&#34;rp-quiz.xlsx&#34;)
+
+# Assuming that you are familiar with pivot table in excel
+# index refers to the row
+pvt = pd.pivot_table(df,index=[&#34;school&#34;, &#34;year&#34;], values=[&#34;score&#34;], 
+aggfunc=[np.mean,len], margins=False)
+
+# get unique value for the index for each level
+print(pvt.index.get_level_values(0).unique()) # index level 0 is schools
+print(pvt.index.get_level_values(1).unique()) # index level 1 is year
+
+writer = pd.ExcelWriter(&#39;output.xlsx&#39;)
+
+# xs &lt;-- cross-section is for spliting a dataframe into sub-section
+for school in pvt.index.get_level_values(0).unique():
+   temp_df = pvt.xs(school, level=0)
+   temp_df.to_excel(writer,school) # 2nd argument is for the Excel Sheet
+
+writer.save()
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Pandas" duration="0">
+        <aside class="special"><p>Library required: matplotlib, pandas</p>
+<ul>
+<li><strong>Installation</strong>: pip install matplotlib</li>
+<li>Resources</li>
+<li><a href="http://queirozf.com/entries/pandas-dataframe-plot-examples-with-matplotlib-pyplot" target="_blank">http://queirozf.com/entries/pandas-dataframe-plot-examples-with-matplotlib-pyplot</a></li>
+<li><a href="https://towardsdatascience.com/9-pandas-visualizations-techniques-for-effective-data-analysis-fc17feb651db" target="_blank">https://towardsdatascience.com/9-pandas-visualizations-techniques-for-effective-data-analysis-fc17feb651db</a></li>
+</ul>
+</aside>
+<p><strong>Use Case: Plot a Barchart</strong></p>
+<pre><code>import matplotlib.pyplot as plt
+import pandas as pd
+
+df = pd.DataFrame({
+   &#39;name&#39;:[&#39;john&#39;,&#39;mary&#39;,&#39;peter&#39;,&#39;jeff&#39;,&#39;bill&#39;,&#39;lisa&#39;,&#39;jose&#39;],
+   &#39;age&#39;:[23,78,22,19,45,33,20]
+})
+
+df.plot.bar(x=&#39;name&#39;,y=&#39;age&#39;)
+plt.show()
+
+# use show() or savefig(), not both
+plt.savefig(&#39;output.png&#39;)
+</code></pre>
+<p>Output: </p>
+<p class="image-container"><img style="width: 342.47px" src="img\106c73d0293f5ac0.png"></p>
+<p>Plotting with DataFrame</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Microsoft Outlook" duration="0">
+        <aside class="special"><p>Library required: pywin32</p>
+<ul>
+<li><strong>Installation</strong>: pip install pywin32</li>
+</ul>
+</aside>
+<p><strong>Use Case: Create Outlook Appointment</strong></p>
+<ul>
+<li><em>CreateItem </em>property (0: Email, 1: appointment)</li>
+</ul>
+<pre><code>import win32com.client
+
+#Create and send appointment
+outlook = win32com.client.Dispatch(&#34;Outlook.Application&#34;)
+appt = outlook.CreateItem(1) # AppointmentItem, 0 - Email
+appt.Start = &#34;2020-05-09 16:10&#34; # yyyy-MM-dd hh:mm
+appt.Subject = &#34;Subject of the meeting&#34;
+appt.Duration = 60 # In minutes (60 Minutes)
+appt.Location = &#34;Location Name&#34;
+
+# 1 - olMeeting; Changing the appointment to meeting.
+# Only after changing the meeting status recipients can be added
+appt.MeetingStatus = 1
+
+appt.Recipients.Add(&#34;someuser@yahoo.com&#34;) # Don&#39;t end ; as delimiter
+
+appt.Save()
+appt.Send()
+</code></pre>
+<p><strong>Use Case: Delete Outlook Appointment</strong></p>
+<aside class="warning"><p>Use with care, do not delete all your appointments!</p>
+<ul>
+<li>Use the <strong><em>Subject </em></strong>property to select the relevant appointment</li>
+</ul>
+</aside>
+<pre><code>import win32com.client
+
+#Delete appointment
+outlook = win32com.client.Dispatch(&#34;Outlook.Application&#34;).GetNamespace(&#34;MAPI&#34;)
+calendar = outlook.GetDefaultFolder(9)
+
+for appointment in appointments:
+    if (appointment.Subject == &#34;Subject of the meeting&#34;): 
+        appointment.Delete()
+
+
+</code></pre>
+<p><strong>Use Case: Send Email using Outlook</strong></p>
+<ul>
+<li>Email can be formatted using html</li>
+<li>Absolute path needs to be provided for the location of the attachment</li>
+</ul>
+<pre><code>import win32com.client
+
+subject = &#39;email subject&#39;
+body = &#39;&lt;html&gt;&lt;body&gt;&#39; + &#39;test message&#39; + &#39;&lt;/body&gt;&lt;/html&gt;&#39;
+recipient = &#39;some_user@yahoo.com&#39;
+attachments = [&#34;D:\\abc.txt&#34;]
+
+#Create and send email
+olMailItem = 0x0
+obj = win32com.client.Dispatch(&#34;Outlook.Application&#34;)
+newMail = obj.CreateItem(olMailItem)
+newMail.Subject = subject
+newMail.HTMLBody = body
+#newMail.Body = body
+newMail.To = recipient
+
+for location in attachments:
+   newMail.Attachments.Add(Source=location)
+
+newMail.display()
+newMail.Send()
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="TODO:" duration="0">
+        <p>FIND EMAIL</p>
+<p><a href="https://stackoverflow.com/questions/58339105/find-specific-mail-in-outlook-by-title" target="_blank">https://stackoverflow.com/questions/58339105/find-specific-mail-in-outlook-by-title</a></p>
+<p>Html email</p>
+<p>Attach image in html email:</p>
+<ul>
+<li>See the code for the grit foler</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Web Automation with Selenium" duration="0">
+        <aside class="special"><p>Reading resources for Selenium: <a href="https://selenium-python.readthedocs.io/installation.html#introduction" target="_blank">https://selenium-python.readthedocs.io</a></p>
+<p>Library required: selenium</p>
+<ul>
+<li><strong>Installation</strong>: pip install selenium</li>
+<li>Web driver is required for the different browser</li>
+</ul>
+<p>A wrapper for WhatsApp</p>
+<p><a href="https://github.com/mukulhase/WebWhatsapp-Wrapper" target="_blank">https://github.com/mukulhase/WebWhatsapp-Wrapper</a></p>
+</aside>
+<p><strong>Use Case: Sending WhatsApp Message using Web WhatsApp</strong></p>
+<p>This is a 4 steps process: </p>
+<ol type="1" start="6">
+<li>Go to <a href="https://api.whatsapp.com/send?phone=6596201234&text=hello" target="_blank">https://api.whatsapp.com/send?phone=6596201234&amp;text=hello</a></li>
+<li>Click on the &#34;Send&#34; button</li>
+<li>Click on &#34;use WhatsApp Web&#34; link [You will be prompted to login]</li>
+<li>Select the Chat TextField, Click on the Enter key to send the message</li>
+</ol>
+<pre><code>from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+
+driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
+
+# construct the whatsapp message
+# phone number
+# message -- need to be urlencoded
+message = &#34;hello&#34;
+driver.get(&#34;https://api.whatsapp.com/send?phone=6596201234&amp;text=&#34;+ message)
+
+# click on send button
+elem = driver.find_element_by_id(&#34;action-button&#34;)
+elem.send_keys(Keys.RETURN)
+
+# click on the use WhatsApp Link
+driver.implicitly_wait(3) # seconds
+elem = driver.find_element_by_link_text(&#34;use WhatsApp Web&#34;)
+actions = ActionChains(driver)
+actions.click(elem)
+actions.perform()
+
+# webpage redirected to web.whatsapp.com
+# it takes a while for the page to load
+driver.implicitly_wait(10) # seconds
+
+# the selector can be found using &#39;right-click-&gt;Inspect&#39; in Chrome browser
+# In the copy the chrome developer window, right-click-&gt;copy-&gt;Copy Selector
+elem = driver.find_element_by_css_selector(&#34;#main &gt; footer &gt; div._3pkkz.V42si.copyable-area &gt; div._1Plpp &gt; div &gt; div._2S1VP.copyable-text.selectable-text&#34;)
+elem.send_keys(Keys.RETURN)
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="WhatsApp API Wrapper" duration="0">
+        <aside class="special"><p>Reading resources for schedule :<a href="https://github.com/mukulhase/WebWhatsapp-Wrapper" target="_blank">https://github.com/mukulhase/WebWhatsapp-Wrapper</a> </p>
+<p>Library required: webwhatsapi</p>
+<ul>
+<li><strong>Installation</strong>: pip install webwhatsapi</li>
+</ul>
+</aside>
+<pre><code># usual if else statement
+if condition == True:
+    x = 1
+else: 
+    x = 0
+
+# single line alternative
+condition = True
+x = 1 if condition else 0
+
+print(x)</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Schedule Jobs" duration="0">
+        <aside class="special"><p>Reading resources for schedule :<a href="https://schedule.readthedocs.io/en/stable/" target="_blank">https://schedule.readthedocs.io/en/stable/</a></p>
+<p>Library required: schedule</p>
+<ul>
+<li><strong>Installation</strong>: pip install schedule</li>
+</ul>
+</aside>
+<p>Schedule tasks to run at a regular interval or at specific date and time. </p>
+<pre><code>import schedule
+import time
+
+def task1():
+    print(&#34;Doing task1......&#34;)
+    
+def task2():
+    print(&#34;Doing task 2......&#34;)
+
+schedule.every(1).minutes.do(task1)
+
+schedule.every(7).seconds.do(task2)
+
+#schedule.every().hour.do(job)
+#schedule.every().day.at(&#34;10:30&#34;).do(job)
+#schedule.every().monday.do(job)
+#schedule.every().wednesday.at(&#34;13:15&#34;).do(job)
+#schedule.every().minute.at(&#34;:17&#34;).do(job)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Jupyter Notebook" duration="0">
+        <aside class="special"><p>Reading resources for schedule :<a href="https://jupyter.org/index.html" target="_blank">https://jupyter.org/index.html</a> </p>
+<p>Library required: jupyterlab</p>
+<ul>
+<li><strong>Installation</strong>: pip install jupyterlab, notebook</li>
+</ul>
+</aside>
+<p>To run the notebook, go to command prompt:</p>
+<p>jupyter notebook</p>
+<p>A browser will be launched:</p>
+<p>More information about running the notebook can be found here:</p>
+<p><a href="https://jupyter.readthedocs.io/en/latest/running.html#running" target="_blank">https://jupyter.readthedocs.io/en/latest/running.html#running</a></p>
+<pre><code># specify a port
+jupyter notebook --port 9999
+
+
+# running without browser
+jupyter notebook --no-browser
+</code></pre>
+<p>By default, notebook created will be in C:\Users\&lt;user_id&gt;</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Tips and Tricks" duration="0">
+        <p><a href="https://www.youtube.com/watch?v=C-gEQdGVXbk" target="_blank">https://www.youtube.com/watch?v=C-gEQdGVXbk</a> </p>
+<p>10 Python Tips and Tricks for Writing Better Code</p>
+<p>Tips 1: Ternary Operator</p>
+<pre><code># usual if else statement
+if condition == True:
+    x = 1
+else: 
+    x = 0
+
+# single line alternative
+condition = True
+x = 1 if condition else 0
+
+print(x)</code></pre>
+<p>Tips 2: Using separator for long numbers</p>
+<pre><code># the underscore helps in counting the number of 0
+# it has no effect on the calculation
+num1 = 10_000_000_000
+num2 = 100_000_000
+
+total = num1 + num2
+
+# simple printing
+print(total)
+
+# string formatting
+# separating the numbers with ,
+print(f&#39;{total:,}&#39;)</code></pre>
+<p>Tips 3: Using Context Manager</p>
+<ul>
+<li>Do not have to deal with the issue of forgetting to close file</li>
+<li>The same is applicable for database</li>
+</ul>
+<pre><code>with open(&#39;test.txt&#39;, &#39;r&#39;) as f:
+   file_contents = f.read()
+  
+words = file_contents.split(&#39; &#39;)
+word_count = len(words)
+print(word_count)
+</code></pre>
+<p>Tips 4: Using Enumerate to get item and index</p>
+<ul>
+<li>Do not need to create a counter variable</li>
+</ul>
+<pre><code>names = [&#34;Peter&#34;, &#34;Alan&#34;, &#34;John&#34;]
+
+for index, name in enumerate(names):
+   print(f&#39;{index} - {name}&#39;)
+
+# --------------------------------
+# output/ result
+0 - Peter
+1 - Alan
+2 - John
+</code></pre>
+<p>Tips 5: Using zip to go over 2 or more list of data</p>
+<pre><code>names = [&#34;Peter&#34;, &#34;Alan&#34;, &#34;John&#34;]
+
+ages = [5, 10, 32]
+
+for name, age in zip(names, ages):
+   print(f&#39;{name} is {age} year old&#39;)
+
+# --------------------------------
+# output/ result
+Peter is 5 year old
+Alan is 10 year old
+John is 32 year old
+</code></pre>
+<p>Tips 6: Unpacking of tuple</p>
+<pre><code>a, b, *c = (1, 2, 3, 4, 5)
+
+print(a)
+print(b)
+print(c)
+
+# --------------------------------
+# output/ result
+1
+2
+[3, 4, 5]
+
+# explanation
+# *c will store the remaining values
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Easter Eggs" duration="0">
+        <p>Printing Hello World</p>
+<pre><code>&gt;&gt;&gt; import __hello__
+Hello world!
+
+</code></pre>
+<p>Zen of Python</p>
+<pre><code>&gt;&gt;&gt; import this
+The Zen of Python, by Tim Peters
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren&#39;t special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you&#39;re Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it&#39;s a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let&#39;s do more of those!
+
+
+</code></pre>
+<p>Experience Antigravity</p>
+<pre><code>&gt;&gt;&gt; import antigravity
+</code></pre>
+<p class="image-container"><img style="width: 436.38px" src="img\198e37aee0df937e.png"></p>
+<p>Braces</p>
+<pre><code>from __future__ import braces
+  File &#34;&lt;input&gt;&#34;, line 1
+SyntaxError: not a chance
+
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Learning Resources" duration="0">
+        <h4 is-upgraded>Practice Website</h4>
+<table>
+<tr><td colspan="1" rowspan="1"><p>Description</p>
+</td><td colspan="1" rowspan="1"><p>URL</p>
+</td><td colspan="1" rowspan="1"><p>Remark</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Begin Python</p>
+</td><td colspan="1" rowspan="1"><p><a href="http://beginpython.com" target="_blank">http://beginpython.com</a> </p>
+</td><td colspan="1" rowspan="1"><p>To learn basic concept of programming</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>Pyschools </p>
+</td><td colspan="1" rowspan="1"><p><a href="https://pyschools.com" target="_blank">https://pyschools.com</a> </p>
+</td><td colspan="1" rowspan="1"><p>Extension of begin python website, with more advanced topics</p>
+</td></tr>
+</table>
+<table>
+<tr><td colspan="1" rowspan="1"><p><strong>Sno</strong></p>
+</td><td colspan="1" rowspan="1"><p><strong>URL</strong></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>1</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.sololearn.com%2Fhome&data=04%7C01%7Ctan_kok_cheng%40rp.edu.sg%7Cb96be6efe2b0489be88808d92a314547%7Cf688b0d079f040a4864435fcdee9d0f3%7C0%7C0%7C637587213370931168%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=EpcyeWIp%2FzuO8UIMqX%2BniY7Dg%2FcI%2Fpy4zFnkECXnV6g%3D&reserved=0" target="_blank">https://www.sololearn.com/home</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>2</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Frealpython.com%2Fpython-first-steps%2F&data=04%7C01%7Ctan_kok_cheng%40rp.edu.sg%7Cb96be6efe2b0489be88808d92a314547%7Cf688b0d079f040a4864435fcdee9d0f3%7C0%7C0%7C637587213370931168%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=XEuq1BZ942p5d8gWvJHFCKJYLb7gVvtoDRNGK%2Fwfruk%3D&reserved=0" target="_blank">https://realpython.com/python-first-steps/</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>3</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.w3schools.com%2Fpython%2F&data=04%7C01%7Ctan_kok_cheng%40rp.edu.sg%7Cb96be6efe2b0489be88808d92a314547%7Cf688b0d079f040a4864435fcdee9d0f3%7C0%7C0%7C637587213370941155%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=yoZdq6Yq6h9To7E0YM02IKFpY9dn15xgMC1TVmfrm0g%3D&reserved=0" target="_blank">https://www.w3schools.com/python/</a></p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p>4</p>
+</td><td colspan="1" rowspan="1"><p><a href="https://apc01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.programiz.com%2Fpython-programming%2Ffirst-program&data=04%7C01%7Ctan_kok_cheng%40rp.edu.sg%7Cb96be6efe2b0489be88808d92a314547%7Cf688b0d079f040a4864435fcdee9d0f3%7C0%7C0%7C637587213370941155%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=r%2BEi%2FVQcuFocmVA75avZy1qsjeEZnWcI48zjbYv9SZ0%3D&reserved=0" target="_blank">https://www.programiz.com/python-programming/first-program</a></p>
+</td></tr>
+</table>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+
+</body>
+</html>
