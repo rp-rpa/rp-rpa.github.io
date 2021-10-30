@@ -27,17 +27,8 @@
                   environment="web"
                   feedback-link="https://rp-rpa.github.io">
     
-      <google-codelab-step label="RPA FOR ACADEMIC STAFF" duration="0">
-        <p>Sample for survey</p>
-<google-codelab-survey survey-id="rp-rpa.github.io-1">
-<h4>What do you like about python?</h4>
-<paper-radio-group>
-<paper-radio-button>Easy to learn</paper-radio-button>
-<paper-radio-button>Powerful</paper-radio-button>
-<paper-radio-button>Free</paper-radio-button>
-</paper-radio-group>
-</google-codelab-survey>
-<p>I am placing a repl iframe here</p>
+      <google-codelab-step label="Download OASIS Data" duration="0">
+        <p>I am placing a repl iframe here</p>
 <iframe class="youtube-video" src="https://repl.it/@kokcheng/01-Files"></iframe>
 <p>End of repl iframe here</p>
 <p>Youtube video here</p>
@@ -72,55 +63,13 @@
 <p><a href="https://github.com/mukulhase/WebWhatsapp-Wrapper" target="_blank">https://github.com/mukulhase/WebWhatsapp-Wrapper</a></p>
 </aside>
 <p><strong>Use Case: Sending WhatsApp Message using Web WhatsApp</strong></p>
-<p>This is a 4 steps process: </p>
-<ol type="1" start="1">
-<li>Go to <a href="https://api.whatsapp.com/send?phone=6596201234&text=hello" target="_blank">https://api.whatsapp.com/send?phone=6596201234&amp;text=hello</a></li>
-<li>Click on the &#34;Send&#34; button</li>
-<li>Click on &#34;use WhatsApp Web&#34; link [You will be prompted to login]</li>
-<li>Select the Chat TextField, Click on the Enter key to send the message</li>
-</ol>
-<pre><code>from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-
-driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
-
-# construct the whatsapp message
-# phone number
-# message -- need to be urlencoded
-message = &#34;hello&#34;
-driver.get(&#34;https://api.whatsapp.com/send?phone=6596201234&amp;text=&#34;+ message)
-
-# click on send button
-elem = driver.find_element_by_id(&#34;action-button&#34;)
-elem.send_keys(Keys.RETURN)
-
-# click on the use WhatsApp Link
-driver.implicitly_wait(3) # seconds
-elem = driver.find_element_by_link_text(&#34;use WhatsApp Web&#34;)
-actions = ActionChains(driver)
-actions.click(elem)
-actions.perform()
-
-# webpage redirected to web.whatsapp.com
-# it takes a while for the page to load
-driver.implicitly_wait(10) # seconds
-
-# the selector can be found using &#39;right-click-&gt;Inspect&#39; in Chrome browser
-# In the copy the chrome developer window, right-click-&gt;copy-&gt;Copy Selector
-elem = driver.find_element_by_css_selector(&#34;#main &gt; footer &gt; div._3pkkz.V42si.copyable-area &gt; div._1Plpp &gt; div &gt; div._2S1VP.copyable-text.selectable-text&#34;)
-elem.send_keys(Keys.RETURN)
-</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="WhatsApp API Wrapper" duration="0">
-        <aside class="special"><p>Reading resources for schedule :<a href="https://github.com/mukulhase/WebWhatsapp-Wrapper" target="_blank">https://github.com/mukulhase/WebWhatsapp-Wrapper</a> </p>
-<p>Library required: webwhatsapi</p>
-<ul>
-<li><strong>Installation</strong>: pip install webwhatsapi</li>
-</ul>
+      <google-codelab-step label="Sending WhatsApp Messages" duration="0">
+        <aside class="special"><p>Sending Single Message</p>
+<p>Sending Multiple Messages from Excel File</p>
 </aside>
 <pre><code># usual if else statement
 if condition == True:
@@ -137,60 +86,25 @@ print(x)</code></pre>
 
       </google-codelab-step>
     
-      <google-codelab-step label="Schedule Jobs" duration="0">
+      <google-codelab-step label="Reading Attendance Emails" duration="0">
         <aside class="special"><p>Reading resources for schedule :<a href="https://schedule.readthedocs.io/en/stable/" target="_blank">https://schedule.readthedocs.io/en/stable/</a></p>
 <p>Library required: schedule</p>
 <ul>
 <li><strong>Installation</strong>: pip install schedule</li>
 </ul>
 </aside>
-<p>Schedule tasks to run at a regular interval or at specific date and time. </p>
-<pre><code>import schedule
-import time
-
-def task1():
-    print(&#34;Doing task1......&#34;)
-    
-def task2():
-    print(&#34;Doing task 2......&#34;)
-
-schedule.every(1).minutes.do(task1)
-
-schedule.every(7).seconds.do(task2)
-
-#schedule.every().hour.do(job)
-#schedule.every().day.at(&#34;10:30&#34;).do(job)
-#schedule.every().monday.do(job)
-#schedule.every().wednesday.at(&#34;13:15&#34;).do(job)
-#schedule.every().minute.at(&#34;:17&#34;).do(job)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
-</code></pre>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Jupyter Notebook" duration="0">
-        <aside class="special"><p>Reading resources for schedule :<a href="https://jupyter.org/index.html" target="_blank">https://jupyter.org/index.html</a> </p>
-<p>Library required: jupyterlab</p>
-<ul>
-<li><strong>Installation</strong>: pip install jupyterlab, notebook</li>
+      <google-codelab-step label="Sending Emails" duration="0">
+        <aside class="special"><ul>
+<li>Based on attendance</li>
 </ul>
 </aside>
 <p>To run the notebook, go to command prompt:</p>
 <p>jupyter notebook</p>
 <p>A browser will be launched:</p>
-<p>More information about running the notebook can be found here:</p>
-<p><a href="https://jupyter.readthedocs.io/en/latest/running.html#running" target="_blank">https://jupyter.readthedocs.io/en/latest/running.html#running</a></p>
-<pre><code># specify a port
-jupyter notebook --port 9999
-
-
-# running without browser
-jupyter notebook --no-browser
-</code></pre>
 <p>By default, notebook created will be in C:\Users\&lt;user_id&gt;</p>
 
 
